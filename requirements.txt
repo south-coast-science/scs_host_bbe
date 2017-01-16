@@ -1,0 +1,2 @@
+spidev
+Adafruit_BBIO
