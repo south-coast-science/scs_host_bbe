@@ -18,7 +18,7 @@ from scs_host.client.mqtt_client import MQTTClient
 username = "southcoastscience-dev"
 print("username:%s" % username)
 
-client_id = "5404"                      # listner
+client_id = "5404"                      # listener
 print("client_id:%s" % client_id)
 
 password = "mh7nxziu"
