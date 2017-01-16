@@ -1,4 +1,4 @@
-'''
+"""
 Created on 4 Jul 2016
 
 http://tightdev.net/SpiDev_Doc.pdf
@@ -11,7 +11,7 @@ cape_disable=bone_capemgr.disable_partno=BB-BONELT-HDMI,BB-BONELT-HDMIN
 cape_enable=bone_capemgr.enable_partno=BB-SPIDEV0,BB-SPIDEV1
 
 chmod a+rw /sys/devices/platform/bone_capemgr/slots
-'''
+"""
 
 import spidev
 
@@ -23,17 +23,17 @@ import spidev
 # --------------------------------------------------------------------------------------------------------------------
 
 class HostSPI(object):
-    '''
+    """
     classdocs
-    '''
+    """
     __BUS = 1
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def __init__(self, device, mode, max_speed):
-        '''
+        """
         Constructor
-        '''
+        """
 
         self.__device = device
         self.__mode = mode

@@ -1,16 +1,16 @@
-'''
+"""
 Created on 16 Nov 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
-'''
+"""
 
 
 # --------------------------------------------------------------------------------------------------------------------
 
 class Host(object):
-    '''
+    """
     TI Sitara AM3358AZCZ100 processor
-    '''
+    """
 
     I2C_EEPROM =        2
     I2C_SENSORS =       2

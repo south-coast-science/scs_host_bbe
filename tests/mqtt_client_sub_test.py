@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-'''
+"""
 Created on 11 Nov 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
@@ -8,7 +8,7 @@ Created on 11 Nov 2016
 mosquitto_pub -h mqtt.opensensors.io -i <DeviceID> -t /users/<UserName>/<TopicName> -m 'This is a test message' -u <UserName> -P <Device Password>
 mosquitto_pub -h mqtt.opensensors.io -i 5402 -t /users/southcoastscience-dev/test/text -m 'hello' -u southcoastscience-dev -P cPhbitmp
 
-'''
+"""
 
 from scs_host.client.mqtt_client import MQTTClient
 

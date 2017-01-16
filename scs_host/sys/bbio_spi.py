@@ -1,4 +1,4 @@
-'''
+"""
 Created on 4 Jul 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
@@ -14,7 +14,7 @@ cape_disable=bone_capemgr.disable_partno=BB-BONELT-HDMI,BB-BONELT-HDMIN
 cape_enable=bone_capemgr.enable_partno=BB-SPIDEV0,BB-SPIDEV1
 
 chmod a+rw /sys/devices/platform/bone_capemgr/slots
-'''
+"""
 
 from Adafruit_BBIO.SPI import SPI
 
@@ -24,16 +24,16 @@ from Adafruit_BBIO.SPI import SPI
 # --------------------------------------------------------------------------------------------------------------------
 
 class BBIOSPI(object):
-    '''
+    """
     classdocs
-    '''
+    """
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def __init__(self, device, mode, max_speed):
-        '''
+        """
         Constructor
-        '''
+        """
 
         self.__device = device
         self.__mode = mode

@@ -1,10 +1,10 @@
-'''
+"""
 Created on 26 Dec 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
 
 https://learn.adafruit.com/setting-up-io-python-library-on-beaglebone-black/port
-'''
+"""
 
 import serial
 import time
@@ -17,9 +17,9 @@ from scs_host.lock.lock import Lock
 # --------------------------------------------------------------------------------------------------------------------
 
 class HostSerial(object):
-    '''
+    """
     classdocs
-    '''
+    """
 
     EOL =               "\r\n"
 
@@ -30,9 +30,9 @@ class HostSerial(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def __init__(self, port_number, baud_rate, hard_handshake=False):
-        '''
+        """
         Constructor
-        '''
+        """
         self.__port_number = port_number
         self.__baud_rate = baud_rate
         self.__hard_handshake = hard_handshake

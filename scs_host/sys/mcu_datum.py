@@ -1,8 +1,8 @@
-'''
+"""
 Created on 2 Oct 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
-'''
+"""
 
 from collections import OrderedDict
 
@@ -13,16 +13,16 @@ from scs_core.data.json import JSONable
 # --------------------------------------------------------------------------------------------------------------------
 
 class MCUDatum(JSONable):
-    '''
+    """
     classdocs
-    '''
+    """
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def __init__(self, temp):
-        '''
+        """
         Constructor
-        '''
+        """
         self.__temp = Datum.float(temp, 1)          # temperature             ºC
 
 

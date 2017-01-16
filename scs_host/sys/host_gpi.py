@@ -1,10 +1,10 @@
-'''
+"""
 Created on 22 Dec 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
 
 https://learn.adafruit.com/setting-up-io-python-library-on-beaglebone-black/using-the-bbio-library
-'''
+"""
 
 import Adafruit_BBIO.GPIO as GPIO
 
@@ -14,16 +14,16 @@ import Adafruit_BBIO.GPIO as GPIO
 # --------------------------------------------------------------------------------------------------------------------
 
 class HostGPI(object):
-    '''
+    """
     classdocs
-    '''
+    """
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def __init__(self, pin):
-        '''
+        """
         Constructor
-        '''
+        """
         self.__pin = pin
 
         GPIO.setup(self.__pin, GPIO.IN)

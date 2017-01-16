@@ -1,4 +1,4 @@
-'''
+"""
 Created on 11 Nov 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
@@ -7,7 +7,7 @@ https://pypi.python.org/pypi/paho-mqtt
 
 mosquitto_pub -h mqtt.opensensors.io -i <DeviceID> -t /users/<UserName>/<TopicName> -m 'This is a test message' -u <UserName> -P <Device Password>
 mosquitto_pub -h mqtt.opensensors.io -i 5402 -t /users/southcoastscience-dev/test/text -m 'hello' -u southcoastscience-dev -P cPhbitmp
-'''
+"""
 
 import paho.mqtt.publish as publish
 import paho.mqtt.subscribe as subscribe
@@ -16,9 +16,9 @@ import paho.mqtt.subscribe as subscribe
 # --------------------------------------------------------------------------------------------------------------------
 
 class MQTTClient(object):
-    '''
+    """
     classdocs
-    '''
+    """
 
     __PORT = 1883
     __TIMEOUT = 60
@@ -27,9 +27,9 @@ class MQTTClient(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def __init__(self):
-        '''
+        """
         Constructor
-        '''
+        """
         self.__host = None
         self.__client_id = None
         self.__auth = None
