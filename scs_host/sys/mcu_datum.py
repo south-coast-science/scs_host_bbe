@@ -46,4 +46,4 @@ class MCUDatum(JSONable):
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        return "MCUDatum:{temp:%0.1f}" % (self.temp)
+        return "MCUDatum:{temp:%0.1f}" % self.temp
