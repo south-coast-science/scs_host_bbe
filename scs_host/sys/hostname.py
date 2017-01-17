@@ -23,8 +23,8 @@ class Hostname(JSONable):
     classdocs
     """
 
-    __HOSTNAME_FILE =       "/etc/hostname"
-    __HOSTS_FILE =          "/etc/hosts"
+    __HOSTNAME_FILE =       "/etc/hostname"           # hard-coded path
+    __HOSTS_FILE =          "/etc/hosts"              # hard-coded path
 
 
     # ----------------------------------------------------------------------------------------------------------------

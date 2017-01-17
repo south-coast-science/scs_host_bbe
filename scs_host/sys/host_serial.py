@@ -24,7 +24,7 @@ class HostSerial(object):
     EOL =               "\r\n"
 
     __UART_PREFIX =     "UART"
-    __PORT_PREFIX =     "/dev/ttyO"
+    __PORT_PREFIX =     "/dev/ttyO"           # hard-coded path
 
 
     # ----------------------------------------------------------------------------------------------------------------

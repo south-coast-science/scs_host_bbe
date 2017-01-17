@@ -18,7 +18,7 @@ from scs_host.lock.lock_timeout import LockTimeout
 class Lock(object):
     """a general-purpose semaphore"""
 
-    __ROOT =    "/run/lock/southcoastscience/"
+    __ROOT =    "/run/lock/southcoastscience/"           # hard-coded path
 
 
     # ----------------------------------------------------------------------------------------------------------------
