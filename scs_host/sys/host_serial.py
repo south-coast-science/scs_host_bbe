@@ -91,8 +91,8 @@ class HostSerial(object):
 
 
     def write_line(self, text):
-        textln = text.strip() + HostSerial.EOL
-        data = textln.encode()
+        text_ln = text.strip() + HostSerial.EOL
+        data = text_ln.encode()
 
         return self.__ser.write(data)
 

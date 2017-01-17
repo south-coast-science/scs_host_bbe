@@ -25,6 +25,7 @@ class HostGPO(object):
         Constructor
         """
         self.__pin = pin
+        self.__state = None
 
         GPIO.setup(self.__pin, GPIO.OUT)
 
