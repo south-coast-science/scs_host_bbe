@@ -22,5 +22,12 @@ class Host(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     @staticmethod
+    def enable_eeprom_write():
+        # nothing needs to be done
+        pass
+
+
+    @staticmethod
     def mcu_temp():
+        # TODO: implement mcu_temp()
         return None
