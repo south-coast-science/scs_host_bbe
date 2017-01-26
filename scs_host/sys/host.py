@@ -15,8 +15,8 @@ class Host(object):
     I2C_EEPROM =        2
     I2C_SENSORS =       2
 
-    SCS_CONF = '/home/debian/SCS/conf/'
-    SCS_OSIO = '/home/debian/SCS/osio/'
+    SCS_CONF = "/home/debian/SCS/conf/"         # hard-coded path
+    SCS_OSIO = "/home/debian/SCS/osio/"         # hard-coded path
 
 
     # ----------------------------------------------------------------------------------------------------------------
