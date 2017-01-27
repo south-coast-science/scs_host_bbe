@@ -24,7 +24,7 @@ class Host(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     @staticmethod
-    def enable_eeprom_write():          # TODO: rename enable_eeprom_access
+    def enable_eeprom_access():
         # nothing needs to be done
         pass
 
