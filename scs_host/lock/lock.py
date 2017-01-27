@@ -13,6 +13,8 @@ import time
 from scs_host.lock.lock_timeout import LockTimeout
 
 
+# TODO: lock must incorporate the process ID - kill if process no longer there
+
 # --------------------------------------------------------------------------------------------------------------------
 
 class Lock(object):
@@ -34,8 +36,6 @@ class Lock(object):
         except FileExistsError:
             pass
 
-
-    # TODO: add lock breaker on (long) timeout
 
     @classmethod
     def acquire(cls, name, timeout=1.0, verbose=False):
