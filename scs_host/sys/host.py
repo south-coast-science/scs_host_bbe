@@ -17,6 +17,8 @@ class Host(object):
 
     DFE_EEPROM_ADDR =   0x54
 
+    DFE_EEP_IMAGE = "/home/debian/SCS/dfe_cape.eep"      # hard-coded path
+
     SCS_CONF = "/home/debian/SCS/conf/"         # hard-coded path
     SCS_OSIO = "/home/debian/SCS/osio/"         # hard-coded path
 
