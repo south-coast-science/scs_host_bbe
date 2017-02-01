@@ -8,28 +8,26 @@ Created on 22 Dec 2016
 
 import time
 
-import Adafruit_BBIO.GPIO as GPIO
-
 from scs_host.sys.host_gpo import HostGPO
 
 
 # --------------------------------------------------------------------------------------------------------------------
 
 try:
-    gpo = HostGPO("P9_12", GPIO.LOW)        # P8_10
+    gpo = HostGPO("P9_12", HostGPO.LOW)        # P8_10
     print(gpo)
 
     time.sleep(1)
 
-    gpo.state = GPIO.HIGH
+    gpo.state = HostGPO.HIGH
     print(gpo)
 
     time.sleep(1)
 
-    gpo.state = GPIO.LOW
+    gpo.state = HostGPO.LOW
     print(gpo)
 
     time.sleep(1)
 
 finally:
-    GPIO.cleanup()
+    HostGPO.cleanup()

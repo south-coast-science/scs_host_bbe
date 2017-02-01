@@ -6,14 +6,15 @@ Created on 22 Dec 2016
 https://learn.adafruit.com/setting-up-io-python-library-on-beaglebone-black/using-the-bbio-library
 """
 
-import Adafruit_BBIO.GPIO as GPIO
+
+from scs_host.sys.host_gpio import HostGPIO
 
 
 # TODO: add lock functionality
 
 # --------------------------------------------------------------------------------------------------------------------
 
-class HostGPO(object):
+class HostGPO(HostGPIO):
     """
     classdocs
     """
@@ -27,7 +28,7 @@ class HostGPO(object):
         self.__pin = pin
         self.__state = None
 
-        GPIO.setup(self.__pin, GPIO.OUT)
+        HostGPIO.setup(self.__pin, HostGPO.OUT)
 
         self.state = state
 
@@ -43,7 +44,7 @@ class HostGPO(object):
     def state(self, state):
         self.__state = state
 
-        GPIO.output(self.__pin, self.__state)
+        HostGPIO.output(self.__pin, self.__state)
 
 
     # ----------------------------------------------------------------------------------------------------------------
