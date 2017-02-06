@@ -22,6 +22,8 @@ class Host(object):
     SCS_CONF = "/home/debian/SCS/conf/"         # hard-coded path
     SCS_OSIO = "/home/debian/SCS/osio/"         # hard-coded path
 
+    SCS_TMP = "/tmp/southcoastscience/"         # hard-coded path
+
 
     # ----------------------------------------------------------------------------------------------------------------
 
