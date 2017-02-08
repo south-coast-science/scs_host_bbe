@@ -6,39 +6,35 @@ Created on 10 Aug 2016
 
 import os
 import random
-import sys
-import threading
 import time
 
 from scs_host.lock.lock_timeout import LockTimeout
+from scs_host.sys.host import Host
 
-
-# TODO: lock must incorporate the process ID - kill if process no longer there
 
 # --------------------------------------------------------------------------------------------------------------------
 
 class Lock(object):
-    """a general-purpose semaphore"""
-
-    __ROOT =    "/run/lock/southcoastscience/"           # hard-coded path
-
+    """
+    a general-purpose mutex
+    """
 
     # ----------------------------------------------------------------------------------------------------------------
 
     @classmethod
     def init(cls):
         """
-        Establish the /run/lock/southcoastscience/ root.
+        Establish the /run/lock/southcoastscience root.
         Should be invoked on class load.
         """
         try:
-            os.mkdir(cls.__ROOT, 0o777)   # all can write - in case the directory was created by su process # TODO: fails on BBe
+            os.mkdir(Host.SCS_LOCK)
         except FileExistsError:
             pass
 
 
     @classmethod
-    def acquire(cls, name, timeout=1.0, verbose=False):
+    def acquire(cls, name, timeout=1.0):
         """
         Acquire a lock with the given name.
         Raises a LockTimeout exception if the lock could not be acquired before timeout.
@@ -46,11 +42,16 @@ class Lock(object):
         end_time = time.time() + timeout
 
         while not cls.__assert(name):
-            if verbose:
-                print("Lock.acquire: waiting for lock: " + name, file=sys.stderr)
+            pid = cls.pid(name)
 
+            # process exists?...
+            if not cls.__process_exists(pid):
+                cls.clear(name, pid)
+                continue
+
+            # wait...
             if time.time() > end_time:
-                raise LockTimeout(name, cls.ident(name))
+                raise LockTimeout(name, cls.pid(name))
 
             time.sleep(random.uniform(0.000001, 0.001))
 
@@ -58,70 +59,82 @@ class Lock(object):
     @classmethod
     def exists(cls, name):
         """
-        Returns True if a lock is asserted for the given name and current pID-tID.
+        Returns True if a lock is asserted for the given name and this process' pid.
         """
-        return os.path.isdir(cls.__ident_dir(name))
+        return os.path.isdir(cls.__name_dir(name))
 
 
     @classmethod
-    def ident(cls, name):
+    def pid(cls, name):
         """
-        Returns the ident for the lock with the given name, or None if there is no lock.
-        The ident is the string "pID-tID", or None.
+        Returns the pid for the lock with the given name, or None if there is no lock.
         """
         try:
             names = [os.listdir(cls.__name_dir(name))]
 
+        except FileNotFoundError:
+            return None
+
+        try:
             if len(names) == 0:
                 return None
 
-            return names[0][0]
-        except RuntimeError:
+            return int(names[0][0])
+
+        except IndexError:
             return None
 
 
     @classmethod
     def release(cls, name):
         """
-        Releases the lock for the given name and current pID-tID, if there is one.
-        Returns True if there was a lock, and it was released.
+        Releases the lock for the given name and process' pid.
+        Returns True if there was a lock.
         """
         try:
-            if not cls.exists(name):
-                return False
-
-            os.rmdir(cls.__ident_dir(name))
+            os.rmdir(cls.__ident_dir(name, os.getpid()))
             os.rmdir(cls.__name_dir(name))
             return True
 
         except FileNotFoundError:
-            pass
+            return False
 
 
     @classmethod
-    def clear(cls, name):
+    def clear(cls, name, pid):
         """
-        Releases the lock for the given name, irrespective of pID-tID.
-        Returns True if there was a lock, and it was cleared.
-
-        Warning: clear is a last resort - it can have unpredictable consequences for other threads.
+        Releases the lock for the given name and pid.
+        Returns True if there was a lock.
         """
         try:
-            os.rmdir(cls.__name_dir(name) + "/" + cls.ident(name))
+            os.rmdir(cls.__ident_dir(name, pid))
             os.rmdir(cls.__name_dir(name))
             return True
 
         except FileNotFoundError:
-            pass
+            return False
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     @classmethod
+    def __process_exists(cls, pid):
+        if pid is None:
+            return False
+
+        try:
+            os.kill(pid, 0)
+            return True
+
+        except OSError:
+            return False
+
+
+    @classmethod
     def __assert(cls, name):
         try:
-            os.mkdir(cls.__name_dir(name), 0o777)   # all can write - in case the directory was created by su process # TODO: fails on BBe
-            os.mkdir(cls.__ident_dir(name), 0o777)   # all can write - in case the directory was created by su process # TODO: fails on BBe
+            os.mkdir(cls.__name_dir(name))
+            os.mkdir(cls.__ident_dir(name, os.getpid()))
             return True
 
         except FileExistsError:
@@ -130,14 +143,14 @@ class Lock(object):
 
     @classmethod
     def __name_dir(cls, name):
-        return cls.__ROOT + name
+        return Host.SCS_LOCK + name
 
 
     @classmethod
-    def __ident_dir(cls, name):
-        return cls.__name_dir(name) + "/" + str(os.getpid()) + "-" + str(threading.current_thread().ident)
+    def __ident_dir(cls, name, pid):
+        return cls.__name_dir(name) + "/" + str(pid)
 
 
 # --------------------------------------------------------------------------------------------------------------------
 
-Lock.init()
+Lock.init()     # TODO: put .init() in package init throughout

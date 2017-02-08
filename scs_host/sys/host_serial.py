@@ -48,7 +48,7 @@ class HostSerial(object):
 
     def open(self, timeout):
         # lock...
-        Lock.acquire(self.__lock_name, timeout, False)
+        Lock.acquire(self.__lock_name, timeout)
 
         # port...
         port = HostSerial.__PORT_PREFIX + str(self.__port_number)
