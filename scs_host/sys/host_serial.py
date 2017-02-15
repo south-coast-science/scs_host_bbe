@@ -54,7 +54,7 @@ class HostSerial(object):
         port = HostSerial.__PORT_PREFIX + str(self.__port_number)
 
         self.__ser = serial.Serial(port=port, baudrate=self.__baud_rate,
-                                    rtscts=self.__hard_handshake, dsrdtr=False, timeout=1)
+                                   rtscts=self.__hard_handshake, dsrdtr=False, timeout=1)
         self.__ser.close()
         self.__ser.open()
 
