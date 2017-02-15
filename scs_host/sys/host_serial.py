@@ -97,15 +97,16 @@ class HostSerial(object):
         return self.__ser.write(packet)
 
 
-    def read_chars(self, count):
+    # ----------------------------------------------------------------------------------------------------------------
+
+    def read(self, count):
         chars = self.__ser.read(count)
 
         return chars
 
 
-    def write_chars(self, *values):
-        packet = bytearray(values)
-        self.__ser.write(packet)
+    def write(self, *chars):
+        self.__ser.write(bytearray(chars))
 
 
     # ----------------------------------------------------------------------------------------------------------------
