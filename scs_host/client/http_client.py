@@ -16,7 +16,10 @@ class HTTPClient(object):
     classdocs
     """
 
-    __STATUS_OK =       200
+    __STATUS_OK =           200
+    __STATUS_CREATED =      201
+    __STATUS_NO_CONTENT =   204
+
 
     # ----------------------------------------------------------------------------------------------------------------
 
@@ -42,11 +45,13 @@ class HTTPClient(object):
 
     def get(self, path, payload, headers):
         # data...
-        query_string = urllib.parse.urlencode(payload) if payload else None
-        full_path = path + '?' + query_string if query_string else path
+        params = urllib.parse.urlencode(payload) if payload else None
+        query = path + '?' + params if params else path
+
+        # print("query:%s" % query)
 
         # request...
-        self.__conn.request("GET", full_path, None, headers)
+        self.__conn.request("GET", query, None, headers)
         response = self.__conn.getresponse()
 
         # response...
@@ -59,15 +64,12 @@ class HTTPClient(object):
 
 
     def post(self, path, payload, headers):
-        # data...
-        encoded_payload = urllib.parse.urlencode(payload) if payload else None
-
         # request...
-        self.__conn.request("POST", path, encoded_payload, headers)
+        self.__conn.request("POST", path, payload, headers)
         response = self.__conn.getresponse()
 
         # response...
-        if response.status != HTTPClient.__STATUS_OK:
+        if response.status != HTTPClient.__STATUS_CREATED:
             raise RuntimeError("HTTPClient.post: status:%d reason:%s" % (response.status, response.reason))
 
         data = response.read()
@@ -98,7 +100,7 @@ class HTTPClient(object):
         response = self.__conn.getresponse()
 
         # response...
-        if response.status != HTTPClient.__STATUS_OK:
+        if response.status != HTTPClient.__STATUS_NO_CONTENT:
             raise RuntimeError("HTTPClient.delete: status:%d reason:%s" % (response.status, response.reason))
 
         data = response.read()
