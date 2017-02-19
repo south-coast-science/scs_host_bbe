@@ -38,7 +38,7 @@ class MQTTClient(object):
     def connect(self, host, client_id, user_id, password):
         self.__host = host
         self.__client_id = client_id
-        self.__auth = {'user_id': user_id, 'password': password}
+        self.__auth = {'username': user_id, 'password': password}
 
 
     # ----------------------------------------------------------------------------------------------------------------
