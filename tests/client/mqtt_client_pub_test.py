@@ -15,8 +15,8 @@ from scs_host.client.mqtt_client import MQTTClient
 
 # --------------------------------------------------------------------------------------------------------------------
 
-username = "southcoastscience-dev"
-print("username:%s" % username)
+user_id = "southcoastscience-dev"
+print("user_id:%s" % user_id)
 
 client_id = "5402"                      # text-test
 print("client_id:%s" % client_id)
@@ -41,7 +41,7 @@ print("-")
 # --------------------------------------------------------------------------------------------------------------------
 
 client = MQTTClient()
-client.connect(host, client_id, username, password)
+client.connect(host, client_id, user_id, password)
 print(client)
 print("-")
 
