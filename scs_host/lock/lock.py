@@ -29,6 +29,7 @@ class Lock(object):
         """
         try:
             os.mkdir(Host.SCS_LOCK)
+            os.chmod(Host.SCS_LOCK, 0o777)
         except FileExistsError:
             pass
 
@@ -132,9 +133,15 @@ class Lock(object):
 
     @classmethod
     def __assert(cls, name):
+        name_dir = cls.__name_dir(name)
+        ident_dir = cls.__ident_dir(name, os.getpid())
+
         try:
-            os.mkdir(cls.__name_dir(name))
-            os.mkdir(cls.__ident_dir(name, os.getpid()))
+            os.mkdir(name_dir)
+            os.mkdir(ident_dir)
+
+            os.chmod(name_dir, 0o777)
+            os.chmod(ident_dir, 0o777)
             return True
 
         except FileExistsError:
