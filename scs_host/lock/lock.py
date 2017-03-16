@@ -135,14 +135,16 @@ class Lock(object):
 
     @classmethod
     def __assert(cls, name):
-        name_dir = cls.__name_dir(name)
+        # name_dir = cls.__name_dir(name)
         ident_dir = cls.__ident_dir(name, os.getpid())
 
         try:
-            os.mkdir(name_dir)
+            os.makedirs(ident_dir, 0o777)
+
+            # os.mkdir(name_dir)
             # os.chmod(name_dir, 0o777)
 
-            os.mkdir(ident_dir)
+            # os.mkdir(ident_dir)
             # os.chmod(ident_dir, 0o777)
 
             return True
