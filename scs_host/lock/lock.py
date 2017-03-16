@@ -140,10 +140,10 @@ class Lock(object):
 
         try:
             os.mkdir(name_dir)
-            os.chmod(name_dir, 0o777)
+            # os.chmod(name_dir, 0o777)
 
             os.mkdir(ident_dir)
-            os.chmod(ident_dir, 0o777)
+            # os.chmod(ident_dir, 0o777)
 
             return True
 
