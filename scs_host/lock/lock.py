@@ -31,7 +31,7 @@ class Lock(object):
         """
         try:
             os.mkdir(Host.SCS_LOCK)
-            os.chmod(Host.SCS_LOCK, 0o777)
+            os.chmod(Host.SCS_LOCK, 0o777)      # TODO: why does the mod not work on mkdir?
         except FileExistsError:
             pass
 
@@ -64,7 +64,7 @@ class Lock(object):
         """
         Returns True if a lock is asserted for the given name and this process' pid.
         """
-        return os.path.isdir(cls.__name_dir(name))
+        return os.path.isdir(cls.__name_dir(name))      # TODO: look through all the dirs and match the name+*
 
 
     @classmethod
@@ -139,7 +139,8 @@ class Lock(object):
         ident_dir = cls.__ident_dir(name, os.getpid())
 
         try:
-            os.makedirs(ident_dir, 0o777)
+            os.makedirs(ident_dir, 0o777)      # TODO: why does the permission not work on makedirs?
+            # os.chmod(ident_dir, 0o777)
 
             # os.mkdir(name_dir)
             # os.chmod(name_dir, 0o777)
