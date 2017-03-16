@@ -2,6 +2,8 @@
 Created on 10 Aug 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
+
+http://stackoverflow.com/questions/1133857/how-accurate-is-pythons-time-sleep
 """
 
 import os
@@ -54,7 +56,7 @@ class Lock(object):
             if time.time() > end_time:
                 raise LockTimeout(name, cls.pid(name))
 
-            time.sleep(random.uniform(0.000001, 0.001))
+            time.sleep(random.uniform(0.01, 0.1))     # random.uniform(0.000001, 0.001)
 
 
     @classmethod
