@@ -22,7 +22,11 @@ print("pid: %s" % os.getpid())
 
 print("attempt 1...")
 Lock.acquire(resource, 2)
+print("OK")
+print("-")
 
 
 print("attempt 2...")
 Lock.acquire(resource, 2)
+print("OK")
+print("-")
