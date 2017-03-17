@@ -37,7 +37,7 @@ class Lock(object):
 
 
     @classmethod
-    def acquire(cls, name, timeout=1.0):
+    def acquire(cls, name, timeout):
         """
         Acquire a lock with the given name.
         Raises a LockTimeout exception if the lock could not be acquired before timeout.
