@@ -20,8 +20,11 @@ class MQTTClient(object):
     classdocs
     """
 
-    __PORT = 1883
-    __TIMEOUT = 60
+    __PORT =        1883
+    __TIMEOUT =     60
+
+    __PUB_QOS =     1
+    __SUB_QOS =     1
 
 
     # ----------------------------------------------------------------------------------------------------------------
@@ -44,14 +47,14 @@ class MQTTClient(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def publish(self, topic, payload):
-        publish.single(topic, payload, 0, False, self.__host, MQTTClient.__PORT, self.__client_id,
-                                MQTTClient.__TIMEOUT, None, self.__auth)
+        publish.single(topic, payload, MQTTClient.__PUB_QOS, False, self.__host, MQTTClient.__PORT,
+                       self.__client_id, MQTTClient.__TIMEOUT, None, self.__auth)
 
 
     def subscribe(self, topic):
         while True:
-            message = subscribe.simple(topic, 0, 1, False, self.__host, MQTTClient.__PORT, self.__client_id,
-                                        MQTTClient.__TIMEOUT, None, self.__auth)
+            message = subscribe.simple(topic, MQTTClient.__SUB_QOS, 1, False, self.__host, MQTTClient.__PORT,
+                                       self.__client_id, MQTTClient.__TIMEOUT, None, self.__auth)
 
             payload = message.payload.decode()
 
