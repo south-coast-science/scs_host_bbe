@@ -54,7 +54,7 @@ class MQTTClient(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def publish(self, topic, payload):
-        publish.single(topic, payload, MQTTClient.__PUB_QOS, False, self.__host, MQTTClient.__PORT,
+        publish.single(topic, str(payload), MQTTClient.__PUB_QOS, False, self.__host, MQTTClient.__PORT,
                        self.__client_id, MQTTClient.__TIMEOUT, None, self.__auth)
 
 
