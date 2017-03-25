@@ -2,6 +2,8 @@
 Created on 10 Aug 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
+
+http://stackoverflow.com/questions/1133857/how-accurate-is-pythons-time-sleep
 """
 
 import os
@@ -29,13 +31,13 @@ class Lock(object):
         """
         try:
             os.mkdir(Host.SCS_LOCK)
-            os.chmod(Host.SCS_LOCK, 0o777)
+            os.chmod(Host.SCS_LOCK, 0o777)      # TODO: why does the mod not work on mkdir?
         except FileExistsError:
             pass
 
 
     @classmethod
-    def acquire(cls, name, timeout=1.0):
+    def acquire(cls, name, timeout):
         """
         Acquire a lock with the given name.
         Raises a LockTimeout exception if the lock could not be acquired before timeout.
@@ -54,7 +56,7 @@ class Lock(object):
             if time.time() > end_time:
                 raise LockTimeout(name, cls.pid(name))
 
-            time.sleep(random.uniform(0.000001, 0.001))
+            time.sleep(random.uniform(0.01, 0.1))     # random.uniform(0.000001, 0.001)
 
 
     @classmethod
@@ -62,7 +64,7 @@ class Lock(object):
         """
         Returns True if a lock is asserted for the given name and this process' pid.
         """
-        return os.path.isdir(cls.__name_dir(name))
+        return os.path.isdir(cls.__name_dir(name))      # TODO: look through all the dirs and match the name+*
 
 
     @classmethod
@@ -137,12 +139,8 @@ class Lock(object):
         ident_dir = cls.__ident_dir(name, os.getpid())
 
         try:
-            os.mkdir(name_dir)
-            os.chmod(name_dir, 0o777)
-
-            os.mkdir(ident_dir)
-            os.chmod(ident_dir, 0o777)
-
+            os.mkdir(name_dir, 0o777)       # TODO: why does the mod not work on mkdir?
+            os.mkdir(ident_dir, 0o777)      # TODO: why does the mod not work on mkdir?
             return True
 
         except FileExistsError:
@@ -156,7 +154,7 @@ class Lock(object):
 
     @classmethod
     def __ident_dir(cls, name, pid):
-        return cls.__name_dir(name) + "/" + str(pid)
+        return cls.__name_dir(name) + '/' + str(pid)
 
 
 # --------------------------------------------------------------------------------------------------------------------
