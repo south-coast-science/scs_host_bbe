@@ -8,6 +8,8 @@ import http.client
 
 import urllib.parse
 
+from scs_core.sys.http_status import HTTPStatus
+
 
 # --------------------------------------------------------------------------------------------------------------------
 
@@ -15,11 +17,6 @@ class HTTPClient(object):
     """
     classdocs
     """
-
-    __STATUS_OK =           200
-    __STATUS_CREATED =      201
-    __STATUS_NO_CONTENT =   204
-
 
     # ----------------------------------------------------------------------------------------------------------------
 
@@ -48,14 +45,12 @@ class HTTPClient(object):
         params = urllib.parse.urlencode(payload) if payload else None
         query = path + '?' + params if params else path
 
-        # print("query:%s" % query)
-
         # request...
         self.__conn.request("GET", query, None, headers)
         response = self.__conn.getresponse()
 
         # response...
-        if response.status != HTTPClient.__STATUS_OK:
+        if response.status != HTTPStatus.OK:
             raise RuntimeError("HTTPClient.get: status:%d reason:%s" % (response.status, response.reason))
 
         data = response.read()
@@ -69,7 +64,7 @@ class HTTPClient(object):
         response = self.__conn.getresponse()
 
         # response...
-        if response.status != HTTPClient.__STATUS_CREATED:
+        if response.status != HTTPStatus.CREATED:
             raise RuntimeError("HTTPClient.post: status:%d reason:%s" % (response.status, response.reason))
 
         data = response.read()
@@ -86,7 +81,7 @@ class HTTPClient(object):
         response = self.__conn.getresponse()
 
         # response...
-        if response.status != HTTPClient.__STATUS_OK:
+        if response.status != HTTPStatus.OK:
             raise RuntimeError("HTTPClient.put: status:%d reason:%s" % (response.status, response.reason))
 
         data = response.read()
@@ -100,7 +95,7 @@ class HTTPClient(object):
         response = self.__conn.getresponse()
 
         # response...
-        if response.status != HTTPClient.__STATUS_NO_CONTENT:
+        if response.status != HTTPStatus.NO_CONTENT:
             raise RuntimeError("HTTPClient.delete: status:%d reason:%s" % (response.status, response.reason))
 
         data = response.read()
