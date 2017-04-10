@@ -14,11 +14,15 @@ mosquitto_pub -h mqtt.opensensors.io -i 5402 -t /users/southcoastscience-dev/tes
 -m 'hello' -u southcoastscience-dev -P cPhbitmp
 """
 
+import json
 import time
+
+from collections import OrderedDict
 
 import paho.mqtt.client as paho
 
-import paho.mqtt.subscribe as subscribe
+from scs_core.data.json import JSONify
+from scs_core.data.publication import Publication
 
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -37,31 +41,29 @@ class MQTTClient(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def __init__(self):
+    def __init__(self, subscriber=None):        # TODO: handle multiple subscriptions
         """
         Constructor
         """
-        self.__host = None
-        self.__client_id = None
-        self.__auth = None
-
         self.__client = None
+        self.__subscriber = subscriber
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def connect(self, host, client_id, username, password):         # only required for publish
-        # ident for subscribe...
-        self.__host = host
-        self.__client_id = client_id
-        self.__auth = {'username': username, 'password': password}
-
+    def connect(self, host, client_id, username, password):
         # paho client...
         self.__client = paho.Client(client_id)
 
+        # event handling...
+        self.__client.on_connect = self.on_connect
+        self.__client.on_message = self.on_message
+
+        # connect...
         self.__client.username_pw_set(username, password)
         self.__client.connect(host, MQTTClient.__PORT)
 
+        # start thread...
         self.__client.loop_start()
 
 
@@ -71,8 +73,10 @@ class MQTTClient(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def publish(self, topic, payload, timeout):
-        msg_info = self.__client.publish(topic, str(payload), MQTTClient.__PUB_QOS)
+    def publish(self, publication, timeout):
+        payload = JSONify.dumps(publication.payload)
+
+        msg_info = self.__client.publish(publication.topic, payload, MQTTClient.__PUB_QOS)
 
         end_time = time.time() + timeout
 
@@ -85,17 +89,59 @@ class MQTTClient(object):
         return False
 
 
-    def subscribe(self, topic):     # TODO: update to threaded version?
-        while True:
-            message = subscribe.simple(topic, MQTTClient.__SUB_QOS, 1, False, self.__host, MQTTClient.__PORT,
-                                       self.__client_id, MQTTClient.__TIMEOUT, None, self.__auth)
+    # ----------------------------------------------------------------------------------------------------------------
 
-            payload = message.payload.decode()
+    # noinspection PyUnusedLocal
+    def on_connect(self, client, userdata, flags, rc):
+        if self.__subscriber:
+            self.__client.subscribe(self.__subscriber.topic, qos=MQTTClient.__SUB_QOS)
 
-            yield (payload)
+
+    # noinspection PyUnusedLocal
+    def on_message(self, client, userdata, msg):
+        if self.__subscriber:
+            payload = msg.payload.decode()
+            payload_jdict = json.loads(payload, object_pairs_hook=OrderedDict)
+
+            self.__subscriber.handler(Publication(self.__subscriber.topic, payload_jdict))
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        return "MQTTClient:{host:%s, client_id:%s, auth:%s}" % (self.__host, self.__client_id, self.__auth)
+        return "MQTTClient:{subscriber:%s}" % self.__subscriber
+
+
+# --------------------------------------------------------------------------------------------------------------------
+
+class MQTTSubscriber(object):
+    """
+    classdocs
+    """
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    def __init__(self, topic, handler):
+        """
+        Constructor
+        """
+        self.__topic = topic
+        self.__handler = handler
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    @property
+    def topic(self):
+        return self.__topic
+
+
+    @property
+    def handler(self):
+        return self.__handler
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    def __str__(self, *args, **kwargs):
+        return "MQTTSubscriber:{topic:%s, handler:%s}" % (self.topic, self.handler)
