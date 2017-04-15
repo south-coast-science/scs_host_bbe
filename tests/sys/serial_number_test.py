@@ -1,24 +1,16 @@
 #!/usr/bin/env python3
 
 """
-Created on 22 Dec 2016
+Created on 15 Apr 2017
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
 """
 
-from scs_host.sys.host_gpi import HostGPI
+from scs_host.sys.host import Host
 
 
 # --------------------------------------------------------------------------------------------------------------------
 
-try:
-    gpio = HostGPI("P8_10")
-    print(gpio)
+serial_number = Host.serial_number()
 
-    gpio.wait(HostGPI.RISING)
-    print(gpio)
-
-    print('\a')
-
-finally:
-    HostGPI.cleanup()
+print("serial_number:[%s]" % serial_number)
