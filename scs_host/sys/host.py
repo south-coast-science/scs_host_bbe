@@ -4,6 +4,8 @@ Created on 16 Nov 2016
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
 """
 
+import subprocess
+
 
 # --------------------------------------------------------------------------------------------------------------------
 
@@ -28,6 +30,11 @@ class Host(object):
 
 
     # ----------------------------------------------------------------------------------------------------------------
+
+    @staticmethod
+    def power_cycle():
+        subprocess.call(['sudo', 'reboot'])     # TODO: control the power cycle feature on the PSU
+
 
     @staticmethod
     def enable_eeprom_access():
