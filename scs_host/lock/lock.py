@@ -155,8 +155,3 @@ class Lock(object):
     @classmethod
     def __ident_dir(cls, name, pid):
         return cls.__name_dir(name) + '/' + str(pid)
-
-
-# --------------------------------------------------------------------------------------------------------------------
-
-Lock.init()     # TODO: put .init() in package init throughout
