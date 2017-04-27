@@ -6,6 +6,7 @@ Created on 11 Nov 2016
 https://pypi.python.org/pypi/paho-mqtt
 http://www.hivemq.com/blog/mqtt-client-library-paho-python
 http://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels
+http://stackoverflow.com/questions/41624697/mqtt-python-subscribe-to-multiple-topics-and-write-payloads-on-raspberry-lcd
 
 mosquitto_pub -h mqtt.opensensors.io -i <DeviceID> -t /users/<UserName>/<TopicName> \
 -m 'This is a test message' -u <UserName> -P <Device Password>
@@ -41,12 +42,31 @@ class MQTTClient(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def __init__(self, subscriber=None):        # TODO: handle multiple subscriptions
+    @classmethod
+    def on_message_handler(cls, subscriber):
+        # noinspection PyUnusedLocal
+        def message_handler(client, userdata, msg):
+            MQTTClient.on_topic_message_handler(subscriber, msg)
+
+        return message_handler
+
+
+    @classmethod
+    def on_topic_message_handler(cls, subscriber, msg):
+        payload = msg.payload.decode()
+        payload_jdict = json.loads(payload, object_pairs_hook=OrderedDict)
+
+        subscriber.handler(Publication(subscriber.topic, payload_jdict))
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    def __init__(self, *subscribers):
         """
         Constructor
         """
         self.__client = None
-        self.__subscriber = subscriber
+        self.__subscribers = subscribers
 
 
     # ----------------------------------------------------------------------------------------------------------------
@@ -57,7 +77,9 @@ class MQTTClient(object):
 
         # event handling...
         self.__client.on_connect = self.on_connect
-        self.__client.on_message = self.on_message
+
+        for subscriber in self.__subscribers:
+            self.__client.message_callback_add(subscriber.topic, MQTTClient.on_message_handler(subscriber))
 
         # connect...
         self.__client.username_pw_set(username, password)
@@ -93,23 +115,16 @@ class MQTTClient(object):
 
     # noinspection PyUnusedLocal
     def on_connect(self, client, userdata, flags, rc):
-        if self.__subscriber:
-            self.__client.subscribe(self.__subscriber.topic, qos=MQTTClient.__SUB_QOS)
-
-
-    # noinspection PyUnusedLocal
-    def on_message(self, client, userdata, msg):
-        if self.__subscriber:
-            payload = msg.payload.decode()
-            payload_jdict = json.loads(payload, object_pairs_hook=OrderedDict)
-
-            self.__subscriber.handler(Publication(self.__subscriber.topic, payload_jdict))
+        for subscriber in self.__subscribers:
+            self.__client.subscribe(subscriber.topic, qos=MQTTClient.__SUB_QOS)
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        return "MQTTClient:{subscriber:%s}" % self.__subscriber
+        subscribers = '[' + ', '.join(str(subscriber) for subscriber in self.__subscribers) + ']'
+
+        return "MQTTClient:{subscribers:%s}" % subscribers
 
 
 # --------------------------------------------------------------------------------------------------------------------
