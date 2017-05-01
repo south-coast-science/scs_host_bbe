@@ -11,6 +11,9 @@ speed: /etc/modprobe.d/I2C.conf
 
 http://ftp.de.debian.org/debian/pool/main/i/i2c-tools/
 file: i2c-tools-3.1.1/include/linux/i2c-dev.h
+
+Change i2c bus frequency on Beaglebone Black
+http://randymxj.com/?p=538
 """
 
 import fcntl
