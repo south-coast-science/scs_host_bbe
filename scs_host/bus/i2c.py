@@ -3,14 +3,11 @@ Created on 5 Jul 2016
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
 
-https://www.raspberrypi.org/forums/viewtopic.php?f=32&t=134997
-https://github.com/raspberrypi/weather-station/blob/master/i2c_base.py
-
-https://blogs.ncl.ac.uk/francisfranklin/2014/03/23/using-i2c-with-the-raspberry-pi-step-1-modules-and-packages/
-speed: /etc/modprobe.d/I2C.conf
-
 http://ftp.de.debian.org/debian/pool/main/i/i2c-tools/
 file: i2c-tools-3.1.1/include/linux/i2c-dev.h
+
+Change i2c bus frequency on Beaglebone Black
+http://randymxj.com/?p=538
 """
 
 import fcntl
