@@ -8,6 +8,7 @@ http://dumb-looks-free.blogspot.co.uk/2014/05/beaglebone-black-bbb-revision-seri
 """
 
 import os
+import socket
 import subprocess
 
 
@@ -59,6 +60,11 @@ class Host(object):
 
 
     # ----------------------------------------------------------------------------------------------------------------
+
+    @classmethod
+    def name(cls):
+        return socket.gethostname()
+
 
     @classmethod
     def conf_dir(cls):
