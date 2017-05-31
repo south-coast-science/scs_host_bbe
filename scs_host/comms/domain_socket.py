@@ -19,7 +19,7 @@ from scs_core.sys.process_comms import ProcessComms
 
 # --------------------------------------------------------------------------------------------------------------------
 
-class UDS(ProcessComms):
+class DomainSocket(ProcessComms):
     """
     classdocs
     """
@@ -57,7 +57,7 @@ class UDS(ProcessComms):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def connect(self):
+    def connect(self, wait_for_availability=True):
         self.__socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 
 
@@ -71,7 +71,7 @@ class UDS(ProcessComms):
     def read(self):                                             # blocking
         # socket...
         self.__socket.bind(self.__address)
-        self.__socket.listen(UDS.__BACKLOG)
+        self.__socket.listen(DomainSocket.__BACKLOG)
 
         try:
             while True:
@@ -79,7 +79,7 @@ class UDS(ProcessComms):
 
                 try:
                     # data...
-                    yield UDS.__read(connection).strip()
+                    yield DomainSocket.__read(connection).strip()
 
                 finally:
                     connection.close()
@@ -99,7 +99,7 @@ class UDS(ProcessComms):
                 if not wait_for_availability:
                     raise ConnectionRefusedError(ex)
 
-            time.sleep(0.1)
+                time.sleep(0.1)
 
         # data...
         self.__socket.sendall(message.strip().encode())
@@ -115,4 +115,4 @@ class UDS(ProcessComms):
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-            return "UDS:{address:%s, socket:%s}" % (self.address, self.__socket)
+            return "DomainSocket:{address:%s, socket:%s}" % (self.address, self.__socket)
