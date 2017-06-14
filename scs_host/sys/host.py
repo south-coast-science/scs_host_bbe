@@ -22,7 +22,8 @@ class Host(object):
     I2C_EEPROM =        2
     I2C_SENSORS =       2
 
-    DFE_EEPROM_ADDR =   0x54
+    DFE_EEPROM_ADDR =   0x50
+    DFE_UID_ADDR =      0x58
 
     COMMAND_DIR =       "/home/debian/SCS/cmd/"             # hard-coded path
 
