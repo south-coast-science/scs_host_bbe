@@ -71,7 +71,7 @@ class Host(object):
 
     @classmethod
     def ndir_device(cls):
-        return cls.__NDIR_DEVICE            # we might have to search for it
+        return cls.__NDIR_DEVICE            # we might have to search for it instead
 
 
     # ----------------------------------------------------------------------------------------------------------------
