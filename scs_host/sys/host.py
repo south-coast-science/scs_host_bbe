@@ -22,7 +22,8 @@ class Host(object):
     I2C_EEPROM =        2
     I2C_SENSORS =       2
 
-    DFE_EEPROM_ADDR =   0x54
+    DFE_EEPROM_ADDR =   0x50
+    DFE_UID_ADDR =      0x58
 
     COMMAND_DIR =       "/home/debian/SCS/cmd/"             # hard-coded path
 
@@ -31,6 +32,11 @@ class Host(object):
     SCS_LOCK =          "/run/lock/southcoastscience/"      # hard-coded path
 
     SCS_TMP =           "/tmp/southcoastscience/"           # hard-coded path
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    __NDIR_DEVICE =     "/dev/ttyUSB0"                      # hard-coded path
 
     __SCS_CONF =        "/home/debian/SCS/conf/"            # hard-coded path
     __SCS_OSIO =        "/home/debian/SCS/osio/"            # hard-coded path
@@ -52,13 +58,20 @@ class Host(object):
 
     @staticmethod
     def enable_eeprom_access():
-        # nothing needs to be done
+        # nothing needs to be done?
         pass
 
 
     @staticmethod
     def mcu_temp():
         return None
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    @classmethod
+    def ndir_device(cls):
+        return cls.__NDIR_DEVICE            # we might have to search for it instead
 
 
     # ----------------------------------------------------------------------------------------------------------------

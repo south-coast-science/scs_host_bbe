@@ -117,7 +117,7 @@ class I2C(object):
 
     @classmethod
     def write_addr(cls, addr, *values):
-        I2C.__FW.write(bytearray([addr]) + bytearray(values))
+        I2C.__FW.write(bytearray([addr]) + bytes(values))
 
 
     @classmethod
@@ -125,4 +125,4 @@ class I2C(object):
         addr_msb = addr >> 8
         addr_lsb = addr & 0xff
 
-        I2C.__FW.write(bytearray([addr_msb, addr_lsb]) + bytearray(values))
+        I2C.__FW.write(bytearray([addr_msb, addr_lsb]) + bytes(values))
