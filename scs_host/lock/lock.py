@@ -42,6 +42,12 @@ class Lock(object):
         Acquire a lock with the given name.
         Raises a LockTimeout exception if the lock could not be acquired before timeout.
         """
+        if timeout is None:
+            while not cls.__assert(name):
+                time.sleep(random.uniform(0.01, 0.1))
+
+            return
+
         end_time = time.time() + timeout
 
         while not cls.__assert(name):
@@ -56,7 +62,7 @@ class Lock(object):
             if time.time() > end_time:
                 raise LockTimeout(name, cls.pid(name))
 
-            time.sleep(random.uniform(0.01, 0.1))     # random.uniform(0.000001, 0.001)
+            time.sleep(random.uniform(0.01, 0.1))
 
 
     @classmethod
