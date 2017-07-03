@@ -15,7 +15,6 @@ import time
 
 import posix_ipc
 
-from scs_core.data.localized_datetime import LocalizedDatetime
 from scs_core.sync.interval_timer import IntervalTimer
 
 
