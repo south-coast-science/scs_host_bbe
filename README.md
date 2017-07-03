@@ -3,5 +3,5 @@ Host abstractions for data producers or consumers running Debian on the BeagleBo
 
 **Required libraries:** 
 
-* Third party: -
+* Third party: posix_ipc, spidev, Adafruit_BBIO
 * SCS root: scs_core
