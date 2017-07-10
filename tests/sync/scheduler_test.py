@@ -18,13 +18,13 @@ from scs_host.sync.scheduler import Scheduler
 
 # --------------------------------------------------------------------------------------------------------------------
 
-item1 = ScheduleItem('scs-gases', 10, 1)
+item1 = ScheduleItem('scs-gases', 5, 1)
 print(item1)
 
-item2 = ScheduleItem('scs-particulates', 10, 2)
+item2 = ScheduleItem('scs-particulates', 5, 2)
 print(item2)
 
-item3 = ScheduleItem('scs-climate', 20, 1)
+item3 = ScheduleItem('scs-climate', 10, 1)
 print(item3)
 
 items = OrderedDict([(item1.name, item1), (item2.name, item2), (item3.name, item3)])
@@ -38,7 +38,7 @@ print("-")
 
 # --------------------------------------------------------------------------------------------------------------------
 
-heartbeat = Scheduler(schedule)
+heartbeat = Scheduler(schedule, True)
 print(heartbeat)
 print("-")
 

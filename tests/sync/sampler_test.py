@@ -12,6 +12,8 @@ from scs_core.data.localized_datetime import LocalizedDatetime
 
 from scs_core.sampler.sampler import Sampler
 
+from scs_host.sync.schedule_runner import ScheduleRunner
+
 
 # --------------------------------------------------------------------------------------------------------------------
 
@@ -38,14 +40,17 @@ class TestSampler(Sampler):
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        return "TestSampler:{name:%s}" % self.name
+        return "TestSampler:{runner:%s}" % self.runner
 
 
 # --------------------------------------------------------------------------------------------------------------------
 # run...
 
-sampler = TestSampler('scs-gases')
+runner = ScheduleRunner('scs-gases', True)
+
+sampler = TestSampler(runner)
 print(sampler, file=sys.stderr)
+
 sys.stderr.flush()
 
 try:
