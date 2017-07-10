@@ -20,6 +20,19 @@ class StdIO(ProcessComms):
 
     # ----------------------------------------------------------------------------------------------------------------
 
+    @classmethod
+    def prompt(cls, prompt_str):
+        print(prompt_str, end="")
+        sys.stdout.flush()
+
+        line = sys.stdin.readline()
+        sys.stdout.flush()
+
+        return line.strip()
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+
     def connect(self, wait_for_availability=True):
         pass
 

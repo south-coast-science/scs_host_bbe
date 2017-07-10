@@ -10,7 +10,7 @@ import sys
 
 from scs_core.data.localized_datetime import LocalizedDatetime
 
-from scs_host.sync.sampler import Sampler
+from scs_core.sampler.sampler import Sampler
 
 
 # --------------------------------------------------------------------------------------------------------------------
