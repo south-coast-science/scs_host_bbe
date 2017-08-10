@@ -38,6 +38,8 @@ class Host(object):
 
     __NDIR_DEVICE =     "/dev/ttyUSB0"                      # hard-coded path
 
+    __PSU_DEVICE =      5                                   # hard-coded path
+
     __SCS_CONF =        "/home/debian/SCS/conf/"            # hard-coded path
     __SCS_OSIO =        "/home/debian/SCS/osio/"            # hard-coded path
 
@@ -72,6 +74,11 @@ class Host(object):
     @classmethod
     def ndir_device(cls):
         return cls.__NDIR_DEVICE            # we might have to search for it instead
+
+
+    @classmethod
+    def psu_device(cls):
+        return cls.__PSU_DEVICE            # we might have to search for it instead
 
 
     # ----------------------------------------------------------------------------------------------------------------
