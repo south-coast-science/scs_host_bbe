@@ -22,7 +22,7 @@ try:
         text = serial.read_line(HostSerial.EOL, 4.0)
         print("text:[%s]" % text)
 
-except KeyboardInterrupt as ex:
+except KeyboardInterrupt:
         print("host_serial_read_test: KeyboardInterrupt")
 
 finally:
