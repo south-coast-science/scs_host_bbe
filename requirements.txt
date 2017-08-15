@@ -1,4 +1,3 @@
 paho-mqtt
 posix_ipc
-spidev
 Adafruit_BBIO
