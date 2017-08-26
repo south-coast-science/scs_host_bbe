@@ -3,5 +3,5 @@ Host abstractions for data producers or consumers running Debian IoT on the Beag
 
 **Required libraries:** 
 
-* Third party: posix_ipc, spidev, Adafruit_BBIO
+* Third party: posix_ipc, Adafruit_BBIO
 * SCS root: scs_core
