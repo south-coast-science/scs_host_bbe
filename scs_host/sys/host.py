@@ -11,10 +11,12 @@ import os
 import socket
 import subprocess
 
+from scs_core.sys.node import Node
+
 
 # --------------------------------------------------------------------------------------------------------------------
 
-class Host(object):
+class Host(Node):
     """
     TI Sitara AM3358AZCZ100 processor
     """
@@ -41,6 +43,7 @@ class Host(object):
     __PSU_DEVICE =      5                                   # hard-coded path
 
     __SCS_CONF =        "/home/debian/SCS/conf/"            # hard-coded path
+    __SCS_AWS =         "/home/debian/SCS/aws/"             # hard-coded path
     __SCS_OSIO =        "/home/debian/SCS/osio/"            # hard-coded path
 
 
@@ -91,6 +94,11 @@ class Host(object):
     @classmethod
     def conf_dir(cls):
         return cls.__SCS_CONF
+
+
+    @classmethod
+    def aws_dir(cls):
+        return cls.__SCS_AWS
 
 
     @classmethod
