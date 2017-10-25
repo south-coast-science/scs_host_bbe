@@ -73,7 +73,7 @@ class HostSerial(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def read_line(self, terminator, timeout):
+    def read_line(self, eol, timeout):
         end_time = time.time() + timeout
 
         line = ""
@@ -84,16 +84,16 @@ class HostSerial(object):
             char = self.__ser.read().decode(errors='ignore')
             line += char
 
-            if line.endswith(terminator):
+            if line.endswith(eol):
                 break
 
         return line.strip()
 
 
     def write_line(self, text, eol=None):
-        text_eol = HostSerial.EOL if eol is None else eol
+        terminator = HostSerial.EOL if eol is None else eol
 
-        text_ln = text.strip() + text_eol
+        text_ln = text.strip() + terminator
         packet = text_ln.encode()
 
         return self.__ser.write(packet)
