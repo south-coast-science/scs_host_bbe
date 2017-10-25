@@ -90,8 +90,10 @@ class HostSerial(object):
         return line.strip()
 
 
-    def write_line(self, text):
-        text_ln = text.strip() + HostSerial.EOL
+    def write_line(self, text, eol=None):
+        text_eol = HostSerial.EOL if eol is None else eol
+
+        text_ln = text.strip() + text_eol
         packet = text_ln.encode()
 
         return self.__ser.write(packet)
