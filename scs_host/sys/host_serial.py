@@ -55,7 +55,10 @@ class HostSerial(object):
 
         self.__ser = serial.Serial(port=port, baudrate=self.__baud_rate,
                                    rtscts=self.__hard_handshake, dsrdtr=False, timeout=1)
-        self.__ser.close()
+
+        if self.__ser.is_open:
+            self.__ser.close()
+
         self.__ser.open()
 
 
