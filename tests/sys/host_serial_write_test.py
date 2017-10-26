@@ -15,7 +15,7 @@ serial = HostSerial(4, 115200, True)
 print(serial)
 
 try:
-    serial.open(1.0)
+    serial.open(1.0, 1.0)
     print(serial)
 
     serial.write_line("hello world!")

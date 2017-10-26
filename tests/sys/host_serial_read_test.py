@@ -15,7 +15,7 @@ serial = HostSerial(1, 9600, False)     # the PAM7 GPS receiver
 print(serial)
 
 try:
-    serial.open(2.0)
+    serial.open(2.0, 2.0)
     print(serial)
 
     while True:

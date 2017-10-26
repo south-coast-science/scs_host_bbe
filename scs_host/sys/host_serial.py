@@ -46,15 +46,15 @@ class HostSerial(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def open(self, timeout):
+    def open(self, lock_timeout, comms_timeout):
         # lock...
-        Lock.acquire(self.__lock_name, timeout)
+        Lock.acquire(self.__lock_name, lock_timeout)
 
         # port...
         port = HostSerial.__PORT_PREFIX + str(self.__port_number)
 
         self.__ser = serial.Serial(port=port, baudrate=self.__baud_rate,
-                                   rtscts=self.__hard_handshake, dsrdtr=False, timeout=1)
+                                   rtscts=self.__hard_handshake, dsrdtr=False, timeout=comms_timeout)
 
         if self.__ser.is_open:
             self.__ser.close()
