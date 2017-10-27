@@ -56,10 +56,7 @@ class HostSerial(object):
         self.__ser = serial.Serial(port=port, baudrate=self.__baud_rate,
                                    rtscts=self.__hard_handshake, dsrdtr=False, timeout=comms_timeout)
 
-        if self.__ser.is_open:
-            self.__ser.close()
-
-        self.__ser.open()
+        time.sleep(0.3)     # as GE910
 
 
     def close(self):
