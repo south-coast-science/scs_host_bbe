@@ -44,9 +44,11 @@ class Host(Node):
 
     __PSU_DEVICE =      5                                   # hard-coded path
 
-    __SCS_CONF =        "/home/debian/SCS/conf/"            # hard-coded path
-    __SCS_AWS =         "/home/debian/SCS/aws/"             # hard-coded path
-    __SCS_OSIO =        "/home/debian/SCS/osio/"            # hard-coded path
+    __SCS =             "/home/debian/SCS/"                 # hard-coded path
+
+    __SCS_CONF =        "conf/"                             # hard-coded path
+    __SCS_AWS =         "aws/"                              # hard-coded path
+    __SCS_OSIO =        "osio/"                             # hard-coded path
 
 
     # ----------------------------------------------------------------------------------------------------------------
@@ -99,15 +101,20 @@ class Host(Node):
 
 
     @classmethod
+    def scs_dir(cls):
+        return cls.__SCS
+
+
+    @classmethod
     def conf_dir(cls):
-        return cls.__SCS_CONF
+        return cls.__SCS + cls.__SCS_CONF
 
 
     @classmethod
     def aws_dir(cls):
-        return cls.__SCS_AWS
+        return cls.__SCS + cls.__SCS_AWS
 
 
     @classmethod
     def osio_dir(cls):
-        return cls.__SCS_OSIO
+        return cls.__SCS + cls.__SCS_OSIO
