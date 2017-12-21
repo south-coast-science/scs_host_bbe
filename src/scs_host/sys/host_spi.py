@@ -30,44 +30,47 @@ class HostSPI(object):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def __init__(self, device, mode, max_speed):
+    def __init__(self, bus, device, mode, max_speed):
         """
         Constructor
         """
 
+        self.__bus = bus
         self.__device = device
         self.__mode = mode
         self.__max_speed = max_speed
 
-        self.__bus = None
+        self.__connection = None
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def open(self):
-        self.__bus = SPI(0, self.__device)
+        self.__connection = SPI(self.__bus, self.__device)
 
-        self.__bus.mode = self.__mode
-        self.__bus.msh = self.__max_speed
+        self.__connection.mode = self.__mode
+        self.__connection.msh = self.__max_speed
 
 
     def close(self):
-        if self.__bus:
-            self.__bus.close()
+        if self.__connection:
+            self.__connection.close()
+            self.__connection = None
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def xfer(self, args):
-        self.__bus.xfer(args)
+        self.__connection.xfer(args)
 
 
     def read_bytes(self, count):
-        return self.__bus.readbytes(count)
+        return self.__connection.readbytes(count)
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        return "HostSPI:{device:%s, mode:%d, max_speed:%d}" % (self.__device, self.__mode, self.__max_speed)
+        return "HostSPI:{bus:%d, device:%s, mode:%d, max_speed:%d, connection:%s}" % \
+               (self.__bus, self.__device, self.__mode, self.__max_speed, self.__connection)
 
