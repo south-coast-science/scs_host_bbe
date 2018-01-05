@@ -21,40 +21,40 @@ class Host(Node):
     TI Sitara AM3358AZCZ100 processor
     """
 
-    OPC_SPI_BUS =       0
-    OPC_SPI_DEVICE =    0
+    I2C_EEPROM =            2
+    I2C_SENSORS =           2
 
-    NDIR_SPI_BUS =      1
-    NDIR_SPI_DEVICE =   0
+    DFE_EEPROM_ADDR =       0x50
+    DFE_UID_ADDR =          0x58
 
-    I2C_EEPROM =        2
-    I2C_SENSORS =       2
+    COMMAND_DIR =           "/home/debian/SCS/cmd/"             # hard-coded path
 
-    DFE_EEPROM_ADDR =   0x50
-    DFE_UID_ADDR =      0x58
+    DFE_EEP_IMAGE =         "/home/debian/SCS/dfe_cape.eep"     # hard-coded path
 
-    COMMAND_DIR =       "/home/debian/SCS/cmd/"             # hard-coded path
+    SCS_LOCK =              "/run/lock/southcoastscience/"      # hard-coded path
 
-    DFE_EEP_IMAGE =     "/home/debian/SCS/dfe_cape.eep"     # hard-coded path
-
-    SCS_LOCK =          "/run/lock/southcoastscience/"      # hard-coded path
-
-    SCS_TMP =           "/tmp/southcoastscience/"           # hard-coded path
+    SCS_TMP =               "/tmp/southcoastscience/"           # hard-coded path
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    __GPS_DEVICE =      1                                   # hard-coded path
+    __OPC_SPI_BUS =         0                                   # based on Adafruit_BBIO.SPI
+    __OPC_SPI_DEVICE =      0                                   # based on Adafruit_BBIO.SPI
 
-    __NDIR_DEVICE =     "/dev/ttyUSB0"                      # hard-coded path
+    __NDIR_SPI_BUS =        1                                   # based on Adafruit_BBIO.SPI
+    __NDIR_SPI_DEVICE =     0                                   # based on Adafruit_BBIO.SPI
 
-    __PSU_DEVICE =      5                                   # hard-coded path
+    __GPS_DEVICE =          1                                   # hard-coded path
 
-    __SCS =             "/home/debian/SCS/"                 # hard-coded path
+    __NDIR_USB_DEVICE =     "/dev/ttyUSB0"                      # hard-coded path
 
-    __SCS_CONF =        "conf/"                             # hard-coded path
-    __SCS_AWS =         "aws/"                              # hard-coded path
-    __SCS_OSIO =        "osio/"                             # hard-coded path
+    __PSU_DEVICE =          5                                   # hard-coded path
+
+    __SCS =                 "/home/debian/SCS/"                 # hard-coded path
+
+    __SCS_CONF =            "conf/"                             # hard-coded path
+    __SCS_AWS =             "aws/"                              # hard-coded path
+    __SCS_OSIO =            "osio/"                             # hard-coded path
 
 
     # ----------------------------------------------------------------------------------------------------------------
@@ -90,8 +90,8 @@ class Host(Node):
 
 
     @classmethod
-    def ndir_device(cls):
-        return cls.__NDIR_DEVICE            # we might have to search for it instead
+    def ndir_usb_device(cls):
+        return cls.__NDIR_USB_DEVICE        # we might have to search for it instead
 
 
     @classmethod
@@ -104,6 +104,26 @@ class Host(Node):
     @classmethod
     def name(cls):
         return socket.gethostname()
+
+
+    @classmethod
+    def ndir_spi_bus(cls):
+        return cls.__NDIR_SPI_BUS
+
+
+    @classmethod
+    def ndir_spi_device(cls):
+        return cls.__NDIR_SPI_DEVICE
+
+
+    @classmethod
+    def opc_spi_bus(cls):
+        return cls.__OPC_SPI_BUS
+
+
+    @classmethod
+    def opc_spi_device(cls):
+        return cls.__OPC_SPI_DEVICE
 
 
     @classmethod
