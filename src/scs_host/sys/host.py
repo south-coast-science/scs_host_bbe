@@ -46,7 +46,7 @@ class Host(Node):
 
     __GPS_DEVICE =          1                                   # hard-coded path
 
-    __NDIR_DEVICE =         "/dev/ttyUSB0"                      # hard-coded path
+    __NDIR_USB_DEVICE =     "/dev/ttyUSB0"                      # hard-coded path
 
     __PSU_DEVICE =          5                                   # hard-coded path
 
@@ -90,8 +90,8 @@ class Host(Node):
 
 
     @classmethod
-    def ndir_device(cls):
-        return cls.__NDIR_DEVICE            # we might have to search for it instead
+    def ndir_usb_device(cls):
+        return cls.__NDIR_USB_DEVICE        # we might have to search for it instead
 
 
     @classmethod
