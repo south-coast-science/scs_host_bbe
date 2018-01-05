@@ -109,8 +109,8 @@ class I2C(object):
         write_bytes = bytearray()
 
         for value16 in value16s:
-            write_bytes.append(value16 >> 8)
-            write_bytes.append(value16 & 0xff)
+            write_bytes += value16 >> 8
+            write_bytes += value16 & 0xff
 
         I2C.__FW.write(write_bytes)
 
