@@ -29,7 +29,7 @@ class HTTPClient(object):
         self.__host = None
 
 
-    def connect(self, host):
+    def connect(self, host):         # TODO: add timeout
         self.__conn = http.client.HTTPSConnection(host)
         self.__host = host
 
