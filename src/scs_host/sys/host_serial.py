@@ -6,8 +6,9 @@ Created on 26 Dec 2016
 https://learn.adafruit.com/setting-up-io-python-library-on-beaglebone-black/port
 """
 
-import serial
 import time
+
+from serial import Serial
 
 import Adafruit_BBIO.UART as UART
 
@@ -53,8 +54,8 @@ class HostSerial(object):
         # port...
         port = HostSerial.__PORT_PREFIX + str(self.__port_number)
 
-        self.__ser = serial.Serial(port=port, baudrate=self.__baud_rate,
-                                   rtscts=self.__hard_handshake, dsrdtr=False, timeout=comms_timeout)
+        self.__ser = Serial(port=port, baudrate=self.__baud_rate, rtscts=self.__hard_handshake, dsrdtr=False,
+                            timeout=comms_timeout)
 
         time.sleep(0.3)     # as GE910
 
