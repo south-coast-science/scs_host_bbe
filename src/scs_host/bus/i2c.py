@@ -6,7 +6,7 @@ Created on 5 Jul 2016
 http://ftp.de.debian.org/debian/pool/main/i/i2c-tools/
 file: i2c-tools-3.1.1/include/linux/i2c-dev.h
 
-Change i2c bus frequency on Beaglebone Black
+Change i2c bus frequency on BeagleBone Black
 http://randymxj.com/?p=538
 """
 
