@@ -18,8 +18,8 @@ chmod a+rw /sys/devices/platform/bone_capemgr/slots
 
 from Adafruit_BBIO.SPI import SPI as ASPI
 
+from scs_host.lock.lock import Lock
 
-# TODO: put tx lock in open / close
 
 # --------------------------------------------------------------------------------------------------------------------
 
@@ -27,6 +27,8 @@ class SPI(object):
     """
     classdocs
     """
+    __LOCK_TIMEOUT =        1.0
+
 
     # ----------------------------------------------------------------------------------------------------------------
 
@@ -46,6 +48,8 @@ class SPI(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def open(self):
+        Lock.acquire(SPI.__name__ + str(self.__bus), SPI.__LOCK_TIMEOUT)
+
         self.__connection = ASPI(self.__bus, self.__device)
 
         self.__connection.mode = self.__mode
@@ -53,9 +57,13 @@ class SPI(object):
 
 
     def close(self):
-        if self.__connection:
-            self.__connection.close()
-            self.__connection = None
+        if self.__connection is None:
+            return
+
+        self.__connection.close()
+        self.__connection = None
+
+        Lock.release(SPI.__name__ + str(self.__bus))
 
 
     # ----------------------------------------------------------------------------------------------------------------
