@@ -16,14 +16,14 @@ cape_enable=bone_capemgr.enable_partno=BB-SPIDEV0,BB-SPIDEV1
 chmod a+rw /sys/devices/platform/bone_capemgr/slots
 """
 
-from Adafruit_BBIO.SPI import SPI
+from Adafruit_BBIO.SPI import SPI as ASPI
 
 
 # TODO: put tx lock in open / close
 
 # --------------------------------------------------------------------------------------------------------------------
 
-class HostSPI(object):
+class SPI(object):
     """
     classdocs
     """
@@ -46,7 +46,7 @@ class HostSPI(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def open(self):
-        self.__connection = SPI(self.__bus, self.__device)
+        self.__connection = ASPI(self.__bus, self.__device)
 
         self.__connection.mode = self.__mode
         self.__connection.msh = self.__max_speed
@@ -71,6 +71,6 @@ class HostSPI(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        return "HostSPI:{bus:%d, device:%s, mode:%d, max_speed:%d, connection:%s}" % \
+        return "SPI:{bus:%d, device:%s, mode:%d, max_speed:%d, connection:%s}" % \
                (self.__bus, self.__device, self.__mode, self.__max_speed, self.__connection)
 
