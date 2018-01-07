@@ -106,6 +106,8 @@ class Host(Node):
         return socket.gethostname()
 
 
+    # ----------------------------------------------------------------------------------------------------------------
+
     @classmethod
     def ndir_spi_bus(cls):
         return cls.__NDIR_SPI_BUS
@@ -125,6 +127,8 @@ class Host(Node):
     def opc_spi_device(cls):
         return cls.__OPC_SPI_DEVICE
 
+
+    # ----------------------------------------------------------------------------------------------------------------
 
     @classmethod
     def scs_dir(cls):
