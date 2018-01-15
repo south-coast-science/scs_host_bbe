@@ -16,7 +16,7 @@ except ImportError:
 
 setup(
     name='scs_host_bbe',
-    version='0.1.0',
+    version='0.1.1',
     description='Abstractions for Beaglebone based systems',
     author='South Coast Science',
     author_email='contact@southcoastscience.com',
