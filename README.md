@@ -5,5 +5,5 @@ _Contains library classes only._
 
 **Required libraries:** 
 
-* Third party: posix_ipc, Adafruit_BBIO
+* Third party: Adafruit_BBIO, AWSIoTPythonSDK, posix_ipc
 * SCS root: scs_core
