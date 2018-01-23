@@ -5,5 +5,5 @@ _Contains library classes only._
 
 **Required libraries:** 
 
-* Third party: Adafruit_BBIO, AWSIoTPythonSDK, posix_ipc
+* Third party: Adafruit_BBIO, AWSIoTPythonSDK, paho-mqtt, posix_ipc, serial
 * SCS root: scs_core
