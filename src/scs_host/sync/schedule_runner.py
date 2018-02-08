@@ -15,6 +15,8 @@ import posix_ipc
 
 from scs_core.sync.runner import Runner
 
+from scs_host.sync.scheduler import Scheduler
+
 
 # --------------------------------------------------------------------------------------------------------------------
 
@@ -53,6 +55,9 @@ class ScheduleRunner(Runner):
                 # start...
                 sem.acquire()
 
+                while sem.value > 0:
+                    sem.acquire()  # clear excessive semaphore counts
+
                 if self.verbose:
                     print('%s: start' % self.name, file=sys.stderr)
                     sys.stderr.flush()
@@ -67,7 +72,7 @@ class ScheduleRunner(Runner):
                     print('%s: done' % self.name, file=sys.stderr)
                     sys.stderr.flush()
 
-                time.sleep(0.1)     # must be longer than the release period and shorter than the sampling interval
+                time.sleep(Scheduler.HOLD_PERIOD)
 
 
     # ----------------------------------------------------------------------------------------------------------------

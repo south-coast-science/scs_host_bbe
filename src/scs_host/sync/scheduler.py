@@ -25,6 +25,10 @@ class Scheduler(object):
     classdocs
     """
 
+    RELEASE_PERIOD =                0.3     # ScheduleItem release period
+    HOLD_PERIOD =                   0.6     # ScheduleRunner hold period
+
+
     # ----------------------------------------------------------------------------------------------------------------
 
     def __init__(self, schedule, verbose=False):
@@ -111,7 +115,7 @@ class SchedulerItem(object):
             # enable...
             sem.release()
 
-            time.sleep(0.01)        # release period: hand semaphore to sampler
+            time.sleep(Scheduler.RELEASE_PERIOD)        # release period: hand semaphore to sampler
 
             try:
                 # disable...
