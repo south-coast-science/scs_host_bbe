@@ -46,17 +46,17 @@ class Host(Node):
     # ----------------------------------------------------------------------------------------------------------------
     # directories...
 
-    __DEFAULT_HOME_DIR =    "/home/debian/"                     # hard-coded abs path
-    __LOCK_DIR =            "/run/lock/southcoastscience/"      # hard-coded abs path
-    __TMP_DIR =             "/tmp/southcoastscience/"           # hard-coded abs path
+    __DEFAULT_HOME_DIR =    "/home/debian"                      # hard-coded abs path
+    __LOCK_DIR =            "/run/lock/southcoastscience"       # hard-coded abs path
+    __TMP_DIR =             "/tmp/southcoastscience"            # hard-coded abs path
 
-    __COMMAND_DIR =         "SCS/cmd/"                          # hard-coded rel path
+    __SCS_DIR =             "SCS"                               # hard-coded rel path
 
-    __CONF_DIR =            "SCS/conf/"                         # hard-coded rel path
-    __AWS_DIR =             "SCS/aws/"                          # hard-coded rel path
-    __OSIO_DIR =            "SCS/osio/"                         # hard-coded rel path
-
-    __DFE_EEP_IMAGE =       "SCS/dfe_cape.eep"                  # hard-coded rel path
+    __COMMAND_DIR =         "cmd"                               # hard-coded rel path
+    __CONF_DIR =            "conf"                              # hard-coded rel path
+    __AWS_DIR =             "aws"                               # hard-coded rel path
+    __OSIO_DIR =            "osio"                              # hard-coded rel path
+    __DFE_EEP_IMAGE =       "dfe_cape.eep"                      # hard-coded rel path
 
 
     # ----------------------------------------------------------------------------------------------------------------
@@ -134,7 +134,7 @@ class Host(Node):
 
     @classmethod
     def home_dir(cls):
-        return cls.__DEFAULT_HOME_DIR
+        return os.environ['SCS_ROOT_PATH'] if 'SCS_ROOT_PATH' in os.environ else cls.__DEFAULT_HOME_DIR
 
 
     @classmethod
@@ -149,24 +149,24 @@ class Host(Node):
 
     @classmethod
     def command_dir(cls):
-        return cls.home_dir() + cls.__COMMAND_DIR
+        return os.path.join(cls.home_dir(), cls.__SCS_DIR, cls.__COMMAND_DIR)
 
 
     @classmethod
     def conf_dir(cls):
-        return cls.home_dir() + cls.__CONF_DIR
+        return os.path.join(cls.home_dir(), cls.__SCS_DIR, cls.__CONF_DIR)
 
 
     @classmethod
     def aws_dir(cls):
-        return cls.home_dir() + cls.__AWS_DIR
+        return os.path.join(cls.home_dir(), cls.__SCS_DIR, cls.__AWS_DIR)
 
 
     @classmethod
     def osio_dir(cls):
-        return cls.home_dir() + cls.__OSIO_DIR
+        return os.path.join(cls.home_dir(), cls.__SCS_DIR, cls.__OSIO_DIR)
 
 
     @classmethod
     def eep_image(cls):
-        return cls.home_dir() + cls.__DFE_EEP_IMAGE
+        return os.path.join(cls.home_dir(), cls.__SCS_DIR, cls.__DFE_EEP_IMAGE)

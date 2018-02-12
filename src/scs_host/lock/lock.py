@@ -155,7 +155,7 @@ class Lock(object):
 
     @classmethod
     def __name_dir(cls, name):
-        return Host.lock_dir() + name
+        return os.path.join(Host.lock_dir(), name)
 
 
     @classmethod
