@@ -21,22 +21,17 @@ class Host(Node):
     TI Sitara AM3358AZCZ100 processor
     """
 
+    OS_ENV_PATH =           'SCS_ROOT_PATH'
+
     I2C_EEPROM =            2
     I2C_SENSORS =           2
 
     DFE_EEPROM_ADDR =       0x50
     DFE_UID_ADDR =          0x58
 
-    COMMAND_DIR =           "/home/debian/SCS/cmd/"             # hard-coded path
-
-    DFE_EEP_IMAGE =         "/home/debian/SCS/dfe_cape.eep"     # hard-coded path
-
-    SCS_LOCK =              "/run/lock/southcoastscience/"      # hard-coded path
-
-    SCS_TMP =               "/tmp/southcoastscience/"           # hard-coded path
-
 
     # ----------------------------------------------------------------------------------------------------------------
+    # devices...
 
     __OPC_SPI_BUS =         0                                   # based on Adafruit_BBIO.SPI
     __OPC_SPI_DEVICE =      0                                   # based on Adafruit_BBIO.SPI
@@ -46,15 +41,25 @@ class Host(Node):
 
     __GPS_DEVICE =          1                                   # hard-coded path
 
-    __NDIR_USB_DEVICE =     "/dev/ttyUSB0"                      # hard-coded path
+    __NDIR_USB_DEVICE =     '/dev/ttyUSB0'                      # hard-coded path
 
     __PSU_DEVICE =          5                                   # hard-coded path
 
-    __SCS =                 "/home/debian/SCS/"                 # hard-coded path
 
-    __SCS_CONF =            "conf/"                             # hard-coded path
-    __SCS_AWS =             "aws/"                              # hard-coded path
-    __SCS_OSIO =            "osio/"                             # hard-coded path
+    # ----------------------------------------------------------------------------------------------------------------
+    # directories...
+
+    __DEFAULT_HOME_DIR =    '/home/debian'                      # hard-coded abs path
+    __LOCK_DIR =            '/run/lock/southcoastscience'       # hard-coded abs path
+    __TMP_DIR =             '/tmp/southcoastscience'            # hard-coded abs path
+
+    __SCS_DIR =             'SCS'                               # hard-coded rel path
+
+    __COMMAND_DIR =         'cmd'                               # hard-coded rel path
+    __CONF_DIR =            'conf'                              # hard-coded rel path
+    __AWS_DIR =             'aws'                               # hard-coded rel path
+    __OSIO_DIR =            'osio'                              # hard-coded rel path
+    __DFE_EEP_IMAGE =       'dfe_cape.eep'                      # hard-coded rel path
 
 
     # ----------------------------------------------------------------------------------------------------------------
@@ -96,7 +101,7 @@ class Host(Node):
 
     @classmethod
     def psu_device(cls):
-        return cls.__PSU_DEVICE            # we might have to search for it instead
+        return cls.__PSU_DEVICE             # we might have to search for it instead
 
 
     # ----------------------------------------------------------------------------------------------------------------
@@ -131,20 +136,40 @@ class Host(Node):
     # ----------------------------------------------------------------------------------------------------------------
 
     @classmethod
-    def scs_dir(cls):
-        return cls.__SCS
+    def home_dir(cls):
+        return os.environ[cls.OS_ENV_PATH] if cls.OS_ENV_PATH in os.environ else cls.__DEFAULT_HOME_DIR
+
+
+    @classmethod
+    def lock_dir(cls):
+        return cls.__LOCK_DIR
+
+
+    @classmethod
+    def tmp_dir(cls):
+        return cls.__TMP_DIR
+
+
+    @classmethod
+    def command_dir(cls):
+        return os.path.join(cls.home_dir(), cls.__SCS_DIR, cls.__COMMAND_DIR)
 
 
     @classmethod
     def conf_dir(cls):
-        return cls.__SCS + cls.__SCS_CONF
+        return os.path.join(cls.home_dir(), cls.__SCS_DIR, cls.__CONF_DIR)
 
 
     @classmethod
     def aws_dir(cls):
-        return cls.__SCS + cls.__SCS_AWS
+        return os.path.join(cls.home_dir(), cls.__SCS_DIR, cls.__AWS_DIR)
 
 
     @classmethod
     def osio_dir(cls):
-        return cls.__SCS + cls.__SCS_OSIO
+        return os.path.join(cls.home_dir(), cls.__SCS_DIR, cls.__OSIO_DIR)
+
+
+    @classmethod
+    def eep_image(cls):
+        return os.path.join(cls.home_dir(), cls.__SCS_DIR, cls.__DFE_EEP_IMAGE)
