@@ -151,6 +151,11 @@ class Host(Node):
 
 
     @classmethod
+    def scs_dir(cls):
+        return os.path.join(cls.home_dir(), cls.__SCS_DIR)
+
+
+    @classmethod
     def command_dir(cls):
         return os.path.join(cls.home_dir(), cls.__SCS_DIR, cls.__COMMAND_DIR)
 
