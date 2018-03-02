@@ -37,15 +37,15 @@ except NotImplementedError:
 print("-")
 
 scs_dir = Host.scs_dir()
-print("scs dir: %s" % scs_dir)
+print("scs_dir: %s" % scs_dir)
 
 conf_dir = Host.conf_dir()
-print("conf dir: %s" % conf_dir)
+print("conf_dir: %s" % conf_dir)
 
 aws_dir = Host.aws_dir()
-print("aws dir: %s" % aws_dir)
+print("aws_dir: %s" % aws_dir)
 
 osio_dir = Host.osio_dir()
-print("osio dir: %s" % osio_dir)
+print("osio_dir: %s" % osio_dir)
 
 print("-")
