@@ -63,17 +63,18 @@ class Host(Node):
 
 
     # ----------------------------------------------------------------------------------------------------------------
+    # commands...
+
+    __SHUTDOWN_CMD =        '/sbin/shutdown'                    # hard-coded path
+
+
+    # ----------------------------------------------------------------------------------------------------------------
 
     @staticmethod
     def serial_number():
         serial = os.popen("hexdump -e '8/1 \"%c\"' /sys/bus/i2c/devices/0-0050/eeprom -s 16 -n 12").readline()
 
         return serial
-
-
-    @staticmethod
-    def power_cycle():
-        subprocess.call(['sudo', 'reboot'])     # TODO: control the power cycle feature on the PSU
 
 
     @staticmethod
@@ -85,6 +86,11 @@ class Host(Node):
     @staticmethod
     def mcu_temp():
         return None
+
+
+    @classmethod
+    def shutdown(cls):
+        subprocess.call([cls.__SHUTDOWN_CMD, 'now'])
 
 
     # ----------------------------------------------------------------------------------------------------------------
