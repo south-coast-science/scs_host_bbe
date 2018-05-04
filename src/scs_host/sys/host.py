@@ -11,6 +11,7 @@ import os
 import socket
 import subprocess
 
+from scs_core.sys.disk_usage import DiskUsage
 from scs_core.sys.node import Node
 
 
@@ -137,6 +138,19 @@ class Host(Node):
     @classmethod
     def opc_spi_device(cls):
         return cls.__OPC_SPI_DEVICE
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+
+    @classmethod
+    def disk_usage(cls, volume):
+        st = os.statvfs(volume)
+
+        free = st.f_bavail * st.f_frsize
+        total = st.f_blocks * st.f_frsize
+        used = (st.f_blocks - st.f_bfree) * st.f_frsize
+
+        return DiskUsage(volume, free, total, used)
 
 
     # ----------------------------------------------------------------------------------------------------------------
