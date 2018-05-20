@@ -147,10 +147,10 @@ class Host(Node):
         st = os.statvfs(volume)
 
         free = st.f_bavail * st.f_frsize
-        total = st.f_blocks * st.f_frsize
         used = (st.f_blocks - st.f_bfree) * st.f_frsize
+        total = st.f_blocks * st.f_frsize
 
-        return DiskUsage(volume, free, total, used)
+        return DiskUsage(volume, free, used, total)
 
 
     # ----------------------------------------------------------------------------------------------------------------
