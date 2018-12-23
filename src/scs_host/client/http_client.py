@@ -124,4 +124,6 @@ class HTTPClient(object):
     # ----------------------------------------------------------------------------------------------------------------
 
     def __str__(self, *args, **kwargs):
-        return "HTTPClient:{host:%s}" % self.__host
+        host_name = None if self.__host is None else self.__host.name()
+
+        return "HTTPClient:{host:%s}" % host_name
