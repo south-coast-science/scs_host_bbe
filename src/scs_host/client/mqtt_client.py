@@ -18,8 +18,6 @@ mosquitto_pub -h mqtt.opensensors.io -i 5402 -t /users/southcoastscience-dev/tes
 import json
 import time
 
-from collections import OrderedDict
-
 import paho.mqtt.client as paho
 
 from scs_core.data.json import JSONify
@@ -54,7 +52,7 @@ class MQTTClient(object):
     @classmethod
     def on_topic_message_handler(cls, subscriber, msg):
         payload = msg.payload.decode()
-        payload_jdict = json.loads(payload, object_pairs_hook=OrderedDict)
+        payload_jdict = json.loads(payload)
 
         subscriber.handler(Publication(subscriber.topic, payload_jdict))
 
