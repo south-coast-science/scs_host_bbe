@@ -12,6 +12,7 @@ http://randymxj.com/?p=538
 
 import fcntl
 import io
+import time
 
 from scs_host.lock.lock import Lock
 
@@ -86,14 +87,22 @@ class I2C(object):
 
 
     @classmethod
-    def read_cmd(cls, cmd, count):
+    def read_cmd(cls, cmd, count, wait=None):
         cls.write(cmd)
+
+        if wait is not None:
+            time.sleep(wait)
+
         return cls.read(count)
 
 
     @classmethod
-    def read_cmd16(cls, cmd16, count):
+    def read_cmd16(cls, cmd16, count, wait=None):
         cls.write16(cmd16)
+
+        if wait is not None:
+            time.sleep(wait)
+
         return cls.read(count)
 
 
