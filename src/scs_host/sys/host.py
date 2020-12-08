@@ -92,11 +92,6 @@ class Host(Node):
         pass
 
 
-    @staticmethod
-    def mcu_temp():
-        return None
-
-
     @classmethod
     def shutdown(cls):
         subprocess.call([cls.__SHUTDOWN_CMD, 'now'])
@@ -124,6 +119,14 @@ class Host(Node):
     @classmethod
     def name(cls):
         return socket.gethostname()
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+    # status...
+
+    @classmethod
+    def status(cls):
+        return None
 
 
     # ----------------------------------------------------------------------------------------------------------------
